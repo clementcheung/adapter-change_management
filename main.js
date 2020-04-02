@@ -2,7 +2,7 @@
 const options = {
   url: 'https://dev57680.service-now.com/',
   username: 'admin',
-  password: 'Te@mW0RK',
+  password: 'xxxxxxxx',
   serviceNowTable: 'change_request'
 };
 
