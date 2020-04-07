@@ -234,7 +234,8 @@ class ServiceNowAdapter extends EventEmitter {
         let processedTicket = null
         if(typeof results === "object") {
             if(results.body) {
-                const changeTicket = JSON.parse(results.body);
+                const body = JSON.parse(results.body);
+                const changeTicket = body.result
                 processedTicket = {
                         change_ticket_number: changeTicket.number,
                         active: changeTicket.active,
@@ -252,18 +253,3 @@ class ServiceNowAdapter extends EventEmitter {
 }
 
 module.exports = ServiceNowAdapter;
-/*
-const adapter = new ServiceNowAdapter("ServiceNow Change", {
-    "url": "https://dev57680.service-now.com/",
-    "auth": {
-        "username": "admin",
-        "password": "Te@mW0RK"
-    },
-    "serviceNowTable": "change_request"
-});
-
-adapter.getRecord((results, error) => {
-    console.log(results);
-    console.log(error);
-})
-*/
