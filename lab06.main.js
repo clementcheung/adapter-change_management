@@ -192,26 +192,7 @@ class ServiceNowAdapter extends EventEmitter {
      * Note how the object was instantiated in the constructor().
      * get() takes a callback function.
      */
-     this.connector.get( (results, error) => {
-        let processedTicketsArray = null
-        if(typeof results === "object") {
-            if(results.body) {
-                const bodyObj = JSON.parse(results.body);
-                processedTicketsArray = bodyObj.result.map( ticket =>
-                    ({   
-                        change_ticket_number: ticket.number,
-                        active: ticket.active,
-                        priority: ticket.priority,
-                        description: ticket.description,
-                        work_start: ticket.work_start,
-                        work_end: ticket.work_end,
-                        change_ticket_key: ticket.sys_id
-                    })
-                );
-                return callback(processedTicketsArray, error);
-            }
-        }
-     });
+     this.connector.get(callback);
   }
 
   /**
@@ -230,40 +211,8 @@ class ServiceNowAdapter extends EventEmitter {
      * Note how the object was instantiated in the constructor().
      * post() takes a callback function.
      */
-     this.connector.post((results, error) => {
-        let processedTicket = null
-        if(typeof results === "object") {
-            if(results.body) {
-                const changeTicket = JSON.parse(results.body);
-                processedTicket = {
-                        change_ticket_number: changeTicket.number,
-                        active: changeTicket.active,
-                        priority: changeTicket.priority,
-                        description: changeTicket.description,
-                        work_start: changeTicket.work_start,
-                        work_end: changeTicket.work_end,
-                        change_ticket_key: changeTicket.sys_id
-                    }
-                return callback(processedTicket, error);
-            }
-        }
-     });
+     this.connector.post(callback);
   }
 }
 
 module.exports = ServiceNowAdapter;
-/*
-const adapter = new ServiceNowAdapter("ServiceNow Change", {
-    "url": "https://dev57680.service-now.com/",
-    "auth": {
-        "username": "admin",
-        "password": "Te@mW0RK"
-    },
-    "serviceNowTable": "change_request"
-});
-
-adapter.getRecord((results, error) => {
-    console.log(results);
-    console.log(error);
-})
-*/
